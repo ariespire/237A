@@ -7,7 +7,7 @@ MODULE_DESCRIPTION("PMUON");
 
 int init_module(void) {
 	unsigned int v;
-
+	unsigned long v0;
 	unsigned long v1;
 	unsigned long v2;
 	unsigned long v3;
@@ -34,6 +34,10 @@ int init_module(void) {
 
 	// 5. Set event counter registers
 	// ***** YOUR CODE STARTS HERE *****
+
+	//PMCCNTR
+	asm volatile("mrc p15, 0, %0, c9, c13, 0\n\t" : "=r" (v0));
+	printk("pmon_init(): Cycle counter has %d events.\n", (v0) & 0x1f);
 
 	//write pmselr
 	asm volatile("mcr p15, 0, %0, c9, c12, 5\n\t" :: "r" (0x0));
