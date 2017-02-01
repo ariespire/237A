@@ -7,6 +7,14 @@ MODULE_DESCRIPTION("PMUON");
 
 int init_module(void) {
 	unsigned int v;
+
+	unsigned long v1;
+	unsigned long v2;
+	unsigned long v3;
+	unsigned long v4;
+	unsigned long v5;
+	unsigned long v6;
+
 	printk("Turn PMU on\n");
 	
 	// 1. Enable "User Enable Register"
@@ -32,48 +40,48 @@ int init_module(void) {
 	//write pmxevtyper
 	asm volatile("mcr p15, 0, %0, c9, c13, 1\n\t" :: "r" (0x04));
 	//read pmxevcntr
-	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v));
-	printk("pmon_init(): First event counter has %d 0x04 events.\n", (v) & 0x1f);
+	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v1));
+	printk("pmon_init(): First event counter has %d 0x04 events.\n", (v1) & 0x1f);
 
 	//write pmselr
 	asm volatile("mcr p15, 0, %0, c9, c12, 5\n\t" :: "r" (0x1));
 	//write pmxevtyper
 	asm volatile("mcr p15, 0, %0, c9, c13, 1\n\t" :: "r" (0x03));
 	//read pmxevcntr
-	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v));
-	printk("pmon_init(): Second event counter has %d 0x03 events.\n", (v) & 0x1f);
+	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v2));
+	printk("pmon_init(): Second event counter has %d 0x03 events.\n", (v2) & 0x1f);
 
 	//write pmselr
 	asm volatile("mcr p15, 0, %0, c9, c12, 5\n\t" :: "r" (0x2));
 	//write pmxevtyper
 	asm volatile("mcr p15, 0, %0, c9, c13, 1\n\t" :: "r" (0x16));
 	//read pmxevcntr
-	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v));
-	printk("pmon_init(): Third event counter has %d 0x16 events.\n", (v) & 0x1f);
+	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v3));
+	printk("pmon_init(): Third event counter has %d 0x16 events.\n", (v3) & 0x1f);
 
 	//write pmselr
 	asm volatile("mcr p15, 0, %0, c9, c12, 5\n\t" :: "r" (0x3));
 	//write pmxevtyper
 	asm volatile("mcr p15, 0, %0, c9, c13, 1\n\t" :: "r" (0x17));
 	//read pmxevcntr
-	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v));
-	printk("pmon_init(): Fourth event counter has %d 0x17 events.\n", (v) & 0x1f);
+	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v4));
+	printk("pmon_init(): Fourth event counter has %d 0x17 events.\n", (v4) & 0x1f);
 
 	//write pmselr
 	asm volatile("mcr p15, 0, %0, c9, c12, 5\n\t" :: "r" (0x4));
 	//write pmxevtyper
 	asm volatile("mcr p15, 0, %0, c9, c13, 1\n\t" :: "r" (0xC9));
 	//read pmxevcntr
-	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v));
-	printk("pmon_init(): Fifth event counter has %d 0xC9 events.\n", (v) & 0x1f);
+	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v5));
+	printk("pmon_init(): Fifth event counter has %d 0xC9 events.\n", (v5) & 0x1f);
 
 	//write pmselr
 	asm volatile("mcr p15, 0, %0, c9, c12, 5\n\t" :: "r" (0x5));
 	//write pmxevtyper
 	asm volatile("mcr p15, 0, %0, c9, c13, 1\n\t" :: "r" (0xCC));
 	//read pmxevcntr
-	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v));
-	printk("pmon_init(): Sixth event counter has %d 0xCC events.\n", (v) & 0x1f);
+	asm volatile("mrc p15, 0, %0, c9, c13, 2\n\t" : "=r" (v6));
+	printk("pmon_init(): Sixth event counter has %d 0xCC events.\n", (v6) & 0x1f);
 
 
 	// ***** YOUR CODE ENDS HERE *******
